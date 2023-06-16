@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="css/milligram.css">
 </head>
 <body>
+
+    <div class="container">
+        <div class="row">
+            <a href="insert.html" class="button button-outline float-left">Create New</a>
+        </div>
+     </div>
+
     <table>
         <thead>
             <tr>
@@ -55,13 +62,13 @@
                 item.forEach(element => {
                     document.getElementById('tableData').innerHTML +=(`
                     <tr>
-                     <td>${item['ProductName']}</td>
-                     <td>${item['ProductCode']}</td>
-                     <td>${item['UnitPrice']}</td>
-                     <td>${item['Qty']}</td>
-                     <td>${item['TotalPrice']}</td>
-                     <td><button onclick = deleteItem(${item['_id']})>Delete</button></td>
-                     <td><button>Update</button></td>
+                     <td>${element['ProductName']}</td>
+                     <td>${element['ProductCode']}</td>
+                     <td>${element['UnitPrice']}</td>
+                     <td>${element['Qty']}</td>
+                     <td>${element['TotalPrice']}</td>
+                     <td><button onclick = "deleteItem('${element['_id']}')">Delete</button></td>
+                     <td><button onclick = "updateItem('${element['_id']}')">Update</button></td>
                     </tr>` 
                 ) 
                 });    
@@ -75,13 +82,20 @@
         async function deleteItem(id){
             let res = await axios.get(`https://crud.teamrabbil.com/api/v1/DeleteProduct/${id}`);
             if(res.status === 200 ){
-                alert("deleted");
-                location.reload();
+                alert("Hello! I am an alert box!!");
+               // location.reload();
+               ducument.getElementById('tableData').innerHTML = ''
+               await getList();
             }
             else {
                 alert("error");
             }
             
+
+        }
+
+        async function updateItem(id){
+            window.location = `update.html?id=${id}`
 
         }
 
